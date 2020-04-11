@@ -102,6 +102,8 @@ dist
 
 # Terraform
 infra/.terraform
+*.tfstate
+*.tfstate.backup
 
 # Visual Studio Code
 .vscode/
