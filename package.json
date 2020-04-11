@@ -1,0 +1,19 @@
+{
+  "name": "interview-concurency-service",
+  "version": "1.0.0",
+  "description": "DAZN BE developer interview task",
+  "main": "src/index.js",
+  "scripts": {
+    "build": "rm -rf node_modules && npm i --production && zip -rq ./build/package.zip node_modules src/* package.json"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kovalenp/interview-concurency-service.git"
+  },
+  "author": "Pavel Kovalenko",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kovalenp/interview-concurency-service/issues"
+  },
+  "homepage": "https://github.com/kovalenp/interview-concurency-service#readme"
+}
