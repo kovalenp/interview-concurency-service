@@ -5,14 +5,10 @@ variable service_version {
 
 variable service_name {
   type        = string
-  description = "(Required) - Service name"
+  description = "(Required) - Service name string to label resources"
 }
 
 variable timestamp {}
-
-variable retention_in_days {
-  default = 7
-}
 
 variable private_subnets {
   type        = list
