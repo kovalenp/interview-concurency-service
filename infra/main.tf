@@ -12,3 +12,9 @@ locals {
     Name = local.service_name
   }
 }
+
+module vpc {
+  source = "./vpc"
+  service_name = local.service_name
+  tags = local.tags
+}
