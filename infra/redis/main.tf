@@ -1,10 +1,10 @@
 resource aws_elasticache_subnet_group group {
-  name       = "tf-test-cache-subnet"
+  name       = "${var.service_name}-redis-subnet-group"
   subnet_ids = var.vpc_subnets
 }
 
 resource aws_elasticache_cluster redis {
-  cluster_id           = "dev-concurrency-service"
+  cluster_id           = "${var.service_name}-redis"
   engine               = "redis"
   node_type            = "cache.t2.micro"
   num_cache_nodes      = 1

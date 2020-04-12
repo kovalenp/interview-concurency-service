@@ -21,6 +21,7 @@ module vpc {
 
 module redis {
   source = "./redis"
+  service_name = local.service_name
   security_group_id = module.vpc.private_security_group_id
   vpc_subnets = module.vpc.private_subnets
   tags = local.tags
@@ -43,7 +44,7 @@ module lb {
   security_group_id = module.vpc.public_security_group_id
   service_name = local.service_name
   manifest_lambda_function_arn = module.lambda_function.manifest_lambda_arn
-  vpc_id      = module.vpc.vpc_id
+  vpc_id = module.vpc.vpc_id
   vpc_subnets = module.vpc.public_subnets
   tags = local.tags
 }

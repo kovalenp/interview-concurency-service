@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/kovalenp/interview-concurency-service#readme",
   "dependencies": {
+    "async-redis": "^1.1.7",
     "pino": "^6.2.0"
   }
 }
