@@ -19,11 +19,20 @@ module vpc {
   tags = local.tags
 }
 
+module redis {
+  source = "./redis"
+  security_group_id = module.vpc.private_security_group_id
+  vpc_subnets = module.vpc.private_subnets
+  tags = local.tags
+}
+
 module lambda_function {
   source = "./lambda"
   service_name = local.service_name
   timestamp = timestamp()
   service_version = "alpha"
+  redis_url = module.redis.redis_url
+  redis_port = module.redis.redis_port
   security_group_id = module.vpc.private_security_group_id
   private_subnets = module.vpc.private_subnets
   tags = local.tags

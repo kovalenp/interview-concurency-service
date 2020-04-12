@@ -20,6 +20,16 @@ variable security_group_id {
   description = "(Required) - Security group id where LB will be deployed"
 }
 
+variable redis_url {
+  type        = string
+  description = "(Required) - Elasticache redis host"
+}
+
+variable redis_port {
+  type        = string
+  description = "(Required) - Elasticache redis port"
+}
+
 variable tags {
   type        = map
   description = "(Required) - Tags map for AWS resources"

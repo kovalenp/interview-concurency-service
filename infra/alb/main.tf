@@ -2,9 +2,8 @@ data aws_region current {}
 
 locals {
   lb_routes = [
-    "/version",
     "/health",
-    "/concurrent"
+    "/concurrency"
   ]
   global_resource_prefix = "dev-${data.aws_region.current.name}"
   target_group_name = "${var.service_name}-tg"
