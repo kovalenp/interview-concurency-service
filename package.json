@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/kovalenp/interview-concurency-service/issues"
   },
-  "homepage": "https://github.com/kovalenp/interview-concurency-service#readme"
+  "homepage": "https://github.com/kovalenp/interview-concurency-service#readme",
+  "dependencies": {
+    "pino": "^6.2.0"
+  }
 }
