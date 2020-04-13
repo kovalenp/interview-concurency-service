@@ -13,7 +13,7 @@ describe('deleteHandler tests', () => {
   });
 
   it('deleteHandler error when call Redis', async () => {
-    sandbox.stub(redis, 'del').throws(new Error('Connecton error'));
+    sandbox.stub(redis, 'del').throws(new Error('Connection error'));
     const response = await deleteHandler(createEventBody({ key: 'testKey' }));
     expect(response.statusCode).to.be.equal(
       500,

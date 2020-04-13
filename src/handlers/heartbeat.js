@@ -24,7 +24,7 @@ const heartbeatHandler = async (event) => {
     });
   } catch (ex) {
     logger.error({ errorMessage: ex.message }, 'Exception in heartbeatHandler');
-    return new InternalServerError('Unexpected error occured');
+    return new InternalServerError('Unexpected error occurred');
   }
 };
 

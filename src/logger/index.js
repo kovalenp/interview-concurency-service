@@ -1,6 +1,6 @@
 const setLogLevel = () => {
   // couple LOG_LEVEL to ENV
-  // supress logs for local unit tests
+  // suppress logs for local unit tests
   switch (process.env.CONFIG_ENV) {
     case 'production':
       return 'info';

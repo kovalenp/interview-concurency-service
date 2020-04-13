@@ -67,7 +67,7 @@ const initHandler = async (event) => {
     });
   } catch (ex) {
     logger.error({ errorMessage: ex.message }, 'Exception in initHandler');
-    return new InternalServerError('Unexpected error occured');
+    return new InternalServerError('Unexpected error occurred');
   }
 };
 

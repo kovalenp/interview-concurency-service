@@ -4,7 +4,7 @@ const response = require('../response');
 const { InternalServerError } = require('../errors');
 
 /**
- * Handles deletion of cuncurrent session
+ * Handles deletion of concurrent session
  *
  * @param {*} event Lambda event
  * @returns HTTP response
@@ -18,7 +18,7 @@ const deleteHandler = async (event) => {
     return response(204);
   } catch (ex) {
     logger.error({ errorMessage: ex.message }, 'Exception in deleteHandler');
-    return new InternalServerError('Unexpected error occured');
+    return new InternalServerError('Unexpected error occurred');
   }
 };
 

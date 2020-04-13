@@ -9,7 +9,7 @@ const { NotFoundError, MethodNotAllowedError } = require('./errors');
 const httpMethods = require('./enums/httpMethods');
 
 exports.handler = async (event) => {
-  logger.debug({ event }, 'Incomming request to lambda');
+  logger.debug({ event }, 'Incoming request to lambda');
 
   if (event.path.endsWith('/health')) return healthHandler(event);
 

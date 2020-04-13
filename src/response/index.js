@@ -1,9 +1,9 @@
 /**
- * Returns concurrency session ids used in Redis cache to store playbac sessions
+ * Returns concurrency session ids used in Redis cache to store playback sessions
  *
  * @param {number} httpCode HTTP code
  * @param {Object} payload Response payload
- * @returns {Object} Reponse object
+ * @returns {Object} Response object
  */
 const response = (httpCode, payload = null) => {
   const res = {
