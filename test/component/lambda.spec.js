@@ -99,4 +99,6 @@ describe('lambda handler parameters validation', () => {
     expect(result.statusCode).to.be.equal(400);
     expect(body.message).to.be.equal('"streamId" is required');
   });
+
+  // More tests to cover other endpoints
 });

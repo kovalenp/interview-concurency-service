@@ -11,7 +11,7 @@ const validate = require('../validation');
  *
  * @param {string} userId User Account identifier
  * @param {number} num Number of allowed concurrent sessions
- * @returns {string[]} Array of concurent session keys
+ * @returns {string[]} Array of concurrent session keys
  */
 const buildSessionKeys = (userId, num) => {
   const keys = [];
@@ -60,10 +60,12 @@ const initHandler = async (event) => {
       });
     }
 
-    // there is no sessionKeys with such tocket (new playback session)
+    // there is no sessionKeys with such token (new playback session)
     if (!userTokens.includes(null)) {
       // there are no free slots (user already reached max concurrency)
-      return new ConcurrencyError('User reached concurrency playback limit');
+      return new ConcurrencyError(
+        'User has reached concurrency playback limit',
+      );
     }
 
     // there is a free slot in concurrency sessions (user has < allowed concurrency playbacks)
