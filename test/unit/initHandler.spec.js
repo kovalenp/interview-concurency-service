@@ -4,7 +4,7 @@ const redis = require('../../src/redis');
 const { createEventBody } = require('../utils/index');
 const initHandler = require('../../src/handlers/init');
 
-describe('initHandler tests', () => {
+describe('initHandler unit tests', () => {
   const sandbox = sinon.createSandbox();
 
   afterEach(() => {
@@ -36,7 +36,7 @@ describe('initHandler tests', () => {
     const responseBody = JSON.parse(response.body);
     expect(response.statusCode).to.be.equal(200);
     expect(responseBody.status).to.be.equal('updated');
-    expect(responseBody.key).to.be.equal('testUser_1');
+    expect(responseBody.sessionKey).to.be.equal('testUser_1');
     expect(responseBody.token).to.be.equal('laptop_football');
   });
 
@@ -53,7 +53,7 @@ describe('initHandler tests', () => {
     const responseBody = JSON.parse(response.body);
     expect(response.statusCode).to.be.equal(200);
     expect(responseBody.status).to.be.equal('initiated');
-    expect(responseBody.key).to.be.equal('testUser_2');
+    expect(responseBody.sessionKey).to.be.equal('testUser_2');
     expect(responseBody.token).to.be.equal('laptop_rugby');
   });
 

@@ -5,7 +5,7 @@ const { createEventBody } = require('../utils/index');
 
 const deleteHandler = require('../../src/handlers/delete');
 
-describe('deleteHandler tests', () => {
+describe('deleteHandler unit tests', () => {
   const sandbox = sinon.createSandbox();
 
   afterEach(() => {
@@ -14,7 +14,9 @@ describe('deleteHandler tests', () => {
 
   it('deleteHandler error when call Redis', async () => {
     sandbox.stub(redis, 'del').throws(new Error('Connection error'));
-    const response = await deleteHandler(createEventBody({ key: 'testKey' }));
+    const response = await deleteHandler(
+      createEventBody({ sessionKey: 'testKey' }),
+    );
     expect(response.statusCode).to.be.equal(
       500,
       'Status code should be HTTP 500',
@@ -23,7 +25,9 @@ describe('deleteHandler tests', () => {
 
   it('deleteHandler returns 204 when key is removed', async () => {
     sandbox.stub(redis, 'del').returns(1);
-    const response = await deleteHandler(createEventBody({ key: 'testKey' }));
+    const response = await deleteHandler(
+      createEventBody({ sessionKey: 'testKey' }),
+    );
     expect(response.statusCode).to.be.equal(
       204,
       'Status code should be HTTP 204',

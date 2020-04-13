@@ -7,7 +7,7 @@ Service is hosted on: http://pk-concurrency-service-lb-1804676257.us-east-1.elb.
 
 Supports the check of number of the simultaneously played streams by single user
 
-OpenAPI yaml is saved in ![here](./docs/service.yml)
+OpenAPI yaml is described in [here](./docs/service.yml)
 
 ## Description
 
@@ -28,6 +28,11 @@ It worth to mention that initial playback on production most probably will requi
 like deviceId and userId could be taken from token claim (alternatively device id may be sort of userAgent string)
 
 Concurrency service request shall return data in jwt token claims as well.
+
+## Build with
+
+Service using serverless architecture and is built with AWS lambda function, Elasticache Redis cluster and Application Load Balancer.
+It relies on AWS capability of scaling.
 
 ## Installing / Building
 

@@ -63,7 +63,7 @@ describe('lambda handler router tests', () => {
   });
 });
 
-describe('lambda handler parameters validation', () => {
+describe('lambda handler input parameters validation', () => {
   const missingDeviceId = createAlbEvent(httpMethods.POST, '/concurrency', {
     userId: 'testUser',
     streamId: 'seahawks',
@@ -99,6 +99,7 @@ describe('lambda handler parameters validation', () => {
     expect(result.statusCode).to.be.equal(400);
     expect(body.message).to.be.equal('"streamId" is required');
   });
-
-  // More tests to cover other endpoints
 });
+
+// These tests could be extended to cover real world scenario of calling /POST endpoint multiple times
+// A lot of tests were omitted for time saving purposes
