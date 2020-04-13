@@ -1,0 +1,136 @@
+swagger: '2.0'
+info:
+  description: 'Description of concurrency service implementation made for the coding interview'
+  version: '1.0.0'
+  title: 'Pavel Kovalenko Interview'
+  contact:
+    email: 'pavel@kovalenko.cz'
+host: 'pk-concurrency-service-lb-1804676257.us-east-1.elb.amazonaws.com'
+tags:
+  - name: 'concurrency'
+    description: 'Supports the check of number of the simultaneously played streams by single user'
+schemes:
+  - 'http'
+paths:
+  /concurrency:
+    post:
+      tags:
+        - 'concurrency'
+      summary: 'Set new concurrency session'
+      consumes:
+        - 'application/json'
+      produces:
+        - 'application/json'
+      parameters:
+        - in: 'body'
+          name: 'body'
+          description: 'Identifiers for concurrency session'
+          required: true
+          schema:
+            $ref: '#/definitions/ConcurrencyInitRequest'
+      responses:
+        200:
+          description: 'Success'
+          schema:
+            $ref: '#/definitions/HeartbeatRequest'
+        400:
+          description: 'Invalid input parameters'
+        403:
+          description: 'User has reached concurrency limit'
+        500:
+          description: 'Internal server error'
+    put:
+      tags:
+        - 'concurrency'
+      summary: 'Concurrency session heartbeat'
+      consumes:
+        - 'application/json'
+      produces:
+        - 'application/json'
+      parameters:
+        - in: 'body'
+          name: 'body'
+          description: 'Identifiers of session and token'
+          required: true
+          schema:
+            $ref: '#/definitions/HeartbeatRequest'
+      responses:
+        200:
+          description: 'Success'
+          schema:
+            $ref: '#/definitions/ConcurrencyResponse'
+        400:
+          description: 'Invalid input parameters'
+        500:
+          description: 'Internal server error'
+    delete:
+      tags:
+        - 'concurrency'
+      summary: 'Terminate session'
+      consumes:
+        - 'application/json'
+      produces:
+        - 'application/json'
+      parameters:
+        - in: 'body'
+          name: 'body'
+          description: 'Identifier of session'
+          required: true
+          schema:
+            $ref: '#/definitions/DeleteRequest'
+      responses:
+        204:
+          description: 'Success no content'
+        400:
+          description: 'Invalid input parameters'
+        500:
+          description: 'Internal server error'
+definitions:
+  ConcurrencyInitRequest:
+    type: 'object'
+    required:
+      - 'userId'
+      - 'deviceId'
+      - 'streamId'
+    properties:
+      userId:
+        type: 'string'
+        example: 'testUserId'
+      deviceId:
+        type: 'string'
+        example: 'laptop'
+      streamId:
+        type: 'string'
+        example: 'seattleSeahawks'
+  HeartbeatRequest:
+    type: 'object'
+    required:
+      - 'sessionKey'
+      - 'token'
+    properties:
+      sessionKey:
+        type: 'string'
+        example: 'testUserId_1'
+      token:
+        type: 'string'
+        example: 'laptop_seattleSeahawks'
+  DeleteRequest:
+    type: 'object'
+    required:
+      - 'sessionKey'
+    properties:
+      sessionKey:
+        type: 'string'
+        example: 'testUserId_1'
+  ConcurrencyResponse:
+    type: 'object'
+    properties:
+      sessionKey:
+        type: 'string'
+        example: 'testUserId_1'
+      token:
+        type: 'string'
+        example: 'testUserId_1'
+      status:
+        type: 'string'
+        example: 'updated'
