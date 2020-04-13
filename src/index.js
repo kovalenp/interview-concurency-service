@@ -1,4 +1,4 @@
-const { healthHandler, initHandler } = require('./handlers');
+const { healthHandler, initHandler, deleteHandler } = require('./handlers');
 const logger = require('./logger');
 const { NotFoundError, MethodNotAllowedError } = require('./errors');
 
@@ -10,6 +10,9 @@ exports.handler = async (event) => {
   if (event.path.endsWith('/concurrency')) {
     if (event.httpMethod === 'POST') {
       return initHandler(event);
+    }
+    if (event.httpMethod === 'DELETE') {
+      return deleteHandler(event);
     }
     return new MethodNotAllowedError(
       `Resource does not support method ${event.httpMethod}`,

@@ -59,7 +59,7 @@ const initHandler = async (event) => {
     // there are no free slots (user already reached max concurrency)
     return new ConcurrencyError('User reached concurrency playback limit');
   } catch (ex) {
-    logger.error({ errorMessage: ex.message }, 'Exception happened');
+    logger.error({ errorMessage: ex.message }, 'Exception in initHandler');
     return new InternalServerError('Unexpected error occured');
   }
 };
