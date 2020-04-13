@@ -3,6 +3,8 @@ const logger = require('../logger');
 const response = require('../response');
 const { ConcurrencyError, InternalServerError } = require('../errors');
 const { ttl, allowedConcurrencyNum } = require('../config');
+const { initConcurrencySchema } = require('../validation/schema');
+const validate = require('../validation');
 
 /**
  * Returns concurrency session ids used in Redis cache to store playback sessions
@@ -27,6 +29,13 @@ const buildSessionKeys = (userId, num) => {
  */
 const initHandler = async (event) => {
   logger.debug({ event }, 'Executing initHandler');
+
+  try {
+    validate(event.body, initConcurrencySchema);
+  } catch (error) {
+    logger.info({ error }, 'Invalid request parameters passed');
+    return error;
+  }
 
   const { deviceId, streamId, userId } = JSON.parse(event.body);
   const userSessionKeys = buildSessionKeys(userId, allowedConcurrencyNum);

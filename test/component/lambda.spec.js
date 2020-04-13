@@ -62,3 +62,17 @@ describe('lambda handler router tests', () => {
     expect(result.statusCode).to.be.equal(404);
   });
 });
+
+describe('lambda handler parameters validation', () => {
+  const missingDeviceId = createAlbEvent(httpMethods.POST, '/concurrency', {
+    userId: 'testUser',
+    streamId: 'seahawks',
+  });
+
+  it('/POST concurrency deviceId is mandatory parameter', async () => {
+    const result = await handler(missingDeviceId);
+    const body = JSON.parse(result.body);
+    expect(result.statusCode).to.be.equal(400);
+    expect(body.message).to.be.equal('"deviceId" is required');
+  });
+});

@@ -63,17 +63,6 @@ resource aws_lb_target_group_attachment manifest_lambda_tg_attachment {
 resource aws_lb_target_group target_group {
   name        = local.target_group_name
   target_type = "lambda"
-
-  health_check {
-    enabled = true
-    interval = 300
-    timeout = 30
-    path = "/health"
-    healthy_threshold = 2
-    unhealthy_threshold = 2
-    matcher = "200-202"
-  }
-
   tags = var.tags
 }
 

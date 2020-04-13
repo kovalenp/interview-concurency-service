@@ -3,6 +3,8 @@ const logger = require('../logger');
 const response = require('../response');
 const { InternalServerError } = require('../errors');
 const { ttl } = require('../config');
+const { heartbeatSchema } = require('../validation/schema');
+const validate = require('../validation');
 
 /**
  * Handles heartbeat request for concurrent session
@@ -12,6 +14,14 @@ const { ttl } = require('../config');
  */
 const heartbeatHandler = async (event) => {
   logger.debug({ event }, 'Executing heartbeatHandler');
+
+  try {
+    validate(event.body, heartbeatSchema);
+  } catch (error) {
+    logger.info({ error }, 'Invalid request parameters passed');
+    return error;
+  }
+
   const { sessionKey, token } = JSON.parse(event.body);
 
   try {
