@@ -4,7 +4,7 @@ class HttpError {
     this.headers = {
       'Content-Type': 'application/json',
     };
-    this.body = JSON.stringify({ message })
+    this.body = JSON.stringify({ message });
   }
 }
 

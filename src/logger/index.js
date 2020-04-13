@@ -3,14 +3,14 @@ const setLogLevel = () => {
   // supress logs for local unit tests
   switch (process.env.CONFIG_ENV) {
     case 'production':
-      return 'info'
+      return 'info';
     case 'development':
-      return 'trace'
+      return 'trace';
     case 'local-test':
-      return 'silent'
+      return 'silent';
     default:
-      return 'debug'
+      return 'debug';
   }
-}
+};
 
-module.exports = require('pino')({ level: setLogLevel() })
+module.exports = require('pino')({ level: setLogLevel() });

@@ -1,8 +1,7 @@
-const log = require('../logger')
+const log = require('../logger');
 
 const healthHandler = (event) => {
-
-  log.debug({ event }, 'Executed healthcheck')
+  log.debug({ event }, 'Executed healthcheck');
 
   return {
     statusCode: 200,
@@ -12,7 +11,7 @@ const healthHandler = (event) => {
     body: JSON.stringify({
       healthy: true,
     }),
-  }
+  };
 };
 
 module.exports = healthHandler;
