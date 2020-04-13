@@ -7,8 +7,7 @@ const log = require('../logger');
  * @returns HTTP response
  */
 const healthHandler = (event) => {
-  log.debug({ event }, 'Executed healthcheck');
-
+  log.trace({ event }, 'Executed healthcheck');
   return {
     statusCode: 200,
     headers: {

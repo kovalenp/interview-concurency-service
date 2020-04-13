@@ -45,26 +45,26 @@ const initHandler = async (event) => {
       await redis.set(sessionKey, token, 'EX', ttl);
 
       return response(200, {
-        key: sessionKey,
+        sessionKey,
         token,
         status: 'updated',
       });
     }
 
     // there is no sessionKeys with such tocket (new playback session)
-    // there is a free slot in concurrency sessions (user has < allowed concurrency playbacks)
-    if (userTokens.includes(null)) {
-      sessionKey = userSessionKeys[userTokens.indexOf(null)];
-      await redis.set(sessionKey, token, 'EX', ttl); // user redis TTL functionality to expiry session if wasn't terminated
-      return response(200, {
-        key: sessionKey,
-        token,
-        status: 'initiated',
-      });
+    if (!userTokens.includes(null)) {
+      // there are no free slots (user already reached max concurrency)
+      return new ConcurrencyError('User reached concurrency playback limit');
     }
 
-    // there are no free slots (user already reached max concurrency)
-    return new ConcurrencyError('User reached concurrency playback limit');
+    // there is a free slot in concurrency sessions (user has < allowed concurrency playbacks)
+    sessionKey = userSessionKeys[userTokens.indexOf(null)];
+    await redis.set(sessionKey, token, 'EX', ttl); // use redis build-in TTL to expiry session if wasn't terminated
+    return response(200, {
+      sessionKey,
+      token,
+      status: 'initiated',
+    });
   } catch (ex) {
     logger.error({ errorMessage: ex.message }, 'Exception in initHandler');
     return new InternalServerError('Unexpected error occured');
