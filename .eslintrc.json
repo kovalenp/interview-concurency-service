@@ -15,7 +15,6 @@
     "ecmaVersion": 2018
   },
   "rules": {
-    "prettier/prettier": "error",
     "max-len": 0
   }
 }

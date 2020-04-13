@@ -7,6 +7,7 @@
     "lint": "eslint .",
     "build": "npm run lint && rm -rf node_modules && npm i --production && zip -rq ./build/package.zip node_modules src/* package.json",
     "test": "npm run mocha-test --file 'test/unit/setup.spec.js' -- \"test/unit/**/*.spec.js\"",
+    "test-component": "npm run mocha-test --file 'test/component/setup.spec.js' -- \"test/component/**/*.spec.js\"",
     "mocha-test": "mocha --timeout 0 --exit --reporter spec"
   },
   "repository": {
