@@ -3,6 +3,12 @@ const logger = require('../logger');
 const response = require('../response');
 const { InternalServerError } = require('../errors');
 
+/**
+ * Handles deletion of cuncurrent session
+ *
+ * @param {*} event Lambda event
+ * @returns HTTP response
+ */
 const deleteHandler = async (event) => {
   logger.debug({ event }, 'Executing deleteHandler');
   const { sessionKey } = JSON.parse(event.body);

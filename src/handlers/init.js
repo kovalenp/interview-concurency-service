@@ -2,6 +2,7 @@ const redis = require('../redis');
 const logger = require('../logger');
 const response = require('../response');
 const { ConcurrencyError, InternalServerError } = require('../errors');
+const { ttl, allowedConcurrencyNum } = require('../config');
 
 /**
  * Returns concurrency session ids used in Redis cache to store playback sessions
@@ -18,11 +19,17 @@ const buildSessionKeys = (userId, num) => {
   return keys;
 };
 
+/**
+ * Handles initial (playback start) request to concurrency service
+ *
+ * @param {*} event Lambda event
+ * @returns HTTP response
+ */
 const initHandler = async (event) => {
   logger.debug({ event }, 'Executing initHandler');
 
   const { deviceId, streamId, userId } = JSON.parse(event.body);
-  const userSessionKeys = buildSessionKeys(userId, 3); // has to be configured parameter (e.g. taken from some config endpoint or ENV var)
+  const userSessionKeys = buildSessionKeys(userId, allowedConcurrencyNum);
   const token = `${deviceId}_${streamId}`;
   try {
     const userTokens = await redis.mget(userSessionKeys); // e.g. [null, token, null]
@@ -35,7 +42,7 @@ const initHandler = async (event) => {
     if (userTokens.includes(token)) {
       sessionKey = userSessionKeys[userTokens.indexOf(token)];
 
-      await redis.set(sessionKey, token, 'EX', 60);
+      await redis.set(sessionKey, token, 'EX', ttl);
 
       return response(200, {
         key: sessionKey,
@@ -48,7 +55,7 @@ const initHandler = async (event) => {
     // there is a free slot in concurrency sessions (user has < allowed concurrency playbacks)
     if (userTokens.includes(null)) {
       sessionKey = userSessionKeys[userTokens.indexOf(null)];
-      await redis.set(sessionKey, token, 'EX', 60); // user redis TTL functionality to expiry session if wasn't terminated
+      await redis.set(sessionKey, token, 'EX', ttl); // user redis TTL functionality to expiry session if wasn't terminated
       return response(200, {
         key: sessionKey,
         token,

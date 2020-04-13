@@ -1,5 +1,11 @@
 const log = require('../logger');
 
+/**
+ * Service health check request
+ *
+ * @param {*} event Lambda event
+ * @returns HTTP response
+ */
 const healthHandler = (event) => {
   log.debug({ event }, 'Executed healthcheck');
 
