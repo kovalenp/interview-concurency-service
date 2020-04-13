@@ -69,10 +69,34 @@ describe('lambda handler parameters validation', () => {
     streamId: 'seahawks',
   });
 
+  const missingStreamId = createAlbEvent(httpMethods.POST, '/concurrency', {
+    userId: 'testUser',
+    deviceId: 'laptop',
+  });
+
+  const missingUserId = createAlbEvent(httpMethods.POST, '/concurrency', {
+    deviceId: 'laptop',
+    streamId: 'seahawks',
+  });
+
   it('/POST concurrency deviceId is mandatory parameter', async () => {
     const result = await handler(missingDeviceId);
     const body = JSON.parse(result.body);
     expect(result.statusCode).to.be.equal(400);
     expect(body.message).to.be.equal('"deviceId" is required');
+  });
+
+  it('/POST concurrency userId is mandatory parameter', async () => {
+    const result = await handler(missingUserId);
+    const body = JSON.parse(result.body);
+    expect(result.statusCode).to.be.equal(400);
+    expect(body.message).to.be.equal('"userId" is required');
+  });
+
+  it('/POST concurrency streamId is mandatory parameter', async () => {
+    const result = await handler(missingStreamId);
+    const body = JSON.parse(result.body);
+    expect(result.statusCode).to.be.equal(400);
+    expect(body.message).to.be.equal('"streamId" is required');
   });
 });
