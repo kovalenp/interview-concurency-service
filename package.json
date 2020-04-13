@@ -4,7 +4,10 @@
   "description": "DAZN BE developer interview task",
   "main": "src/index.js",
   "scripts": {
-    "build": "rm -rf node_modules && npm i --production && zip -rq ./build/package.zip node_modules src/* package.json"
+    "lint": "eslint .",
+    "build": "npm run lint && rm -rf node_modules && npm i --production && zip -rq ./build/package.zip node_modules src/* package.json",
+    "test": "npm run mocha-test --file 'test/unit/setup.spec.js' -- \"test/unit/**/*.spec.js\"",
+    "mocha-test": "mocha --timeout 0 --exit --reporter spec"
   },
   "repository": {
     "type": "git",
@@ -24,8 +27,12 @@
     "prettier": "^2.0.4"
   },
   "devDependencies": {
+    "chai": "^4.2.0",
     "eslint": "^6.8.0",
     "eslint-config-airbnb-base": "^14.1.0",
-    "eslint-plugin-import": "^2.20.2"
+    "eslint-plugin-import": "^2.20.2",
+    "eslint-plugin-mocha": "^6.3.0",
+    "mocha": "^7.1.1",
+    "sinon": "^9.0.2"
   }
 }

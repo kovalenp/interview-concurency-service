@@ -7,11 +7,7 @@ const createRedisClient = () => {
 
   logger.info({ url, port }, 'Connecting to redis');
 
-  const clientObj = redis.createClient(
-    port,
-    url,
-    { no_ready_check: true },
-  );
+  const clientObj = redis.createClient(port, url, { no_ready_check: true });
 
   clientObj.on('error', (err) => {
     logger.error({ errorMessage: err.message }, 'Redis client error');
